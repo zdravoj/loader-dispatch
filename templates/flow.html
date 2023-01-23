@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>PPH & FPH</title>
+    </head>
+    <body>
+        <form action="#" method="post">
+            <h1>Loaders</h1>
+            <table>
+                <tr>
+                    <th>Loader Name</th>
+                    <th>PPH</th>
+                </tr>
+                {% for i in range(loaders_num) %}
+                <tr>
+                    <td><input type="text" name="name{{i}}"></td>
+                    <td><input type="number" name="pph{{i}}"></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <h1>Doors</h1>
+            <table>
+                <tr>
+                    <th>Door Number</th>
+                    <th>FPH</th>
+                </tr>
+                {% for i in range(start_door_num, start_door_num+doors_num) %}
+                <tr>
+                    <td>Door {{i}}</td>
+                    <td><input type="number" name="fph{{i-start_door_num}}"></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <p><input type="submit" text="Calculate!" value="submit"/></p>
+        </form>
+    </body>
+</html>
+

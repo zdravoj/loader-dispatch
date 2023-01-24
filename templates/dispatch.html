@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Assignment Dispatch</title>
+        </head>
+        <body>
+            <h1>Loaders, Assignments, Individual OTEs</h1>
+            <table>
+            <tr>
+                <th>Name</th>
+                <th>Assignment</th>
+                <th>Individual OTEs</th>
+            </tr>
+            {% for i in range(loader_names|length) %}
+                <tr>
+                <td>{{ loader_names[i] }}</td>
+                <td>{{ door_assignments[i] }}</td>
+                <td>{{ assignment_otes[i] }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+            <h1>PD Total OTEs</h1>
+            <p>{{ total_otes }}</p>
+        </body>
+    </html>

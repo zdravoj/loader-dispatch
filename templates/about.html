@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>About Loader Dispatch</title>
+    </head>
+    <body>
+        <h1>About Loader Dispatch</h1>
+        <br>
+        <h2>In a Nutshell</h2>
+        <p>Loader Dispatch takes:</p>
+        <ol>
+            <li>Loader names and PPHs for each loader and</li>
+            <li>A list of adjacent doors and FPH for each door</li>
+        </ol>
+        <p>and returns a list of loaders and their optimized assignment, including:</p>
+        <ul>
+            <li>OTEs expected per hour for each loader's assignment</li>
+            <li>Total OTEs expected per hour for the PD</li>
+        </ul>
+        <br>
+        <h2>How to Use</h2>
+        <p>On the home page, enter:</p>
+        <ul>
+            <li>The number of loaders available</li>
+            <li>The number of doors to assign</li>
+            <li>The starting door number (ex. if creating assignments for doors 100-112, enter 100)</li>
+        </ul>
+        <p>Press the "Submit" button</p>
+        <br>
+        <p>On the next page, enter:</p>
+        <ul>
+            <li>Loader name and individual PPH</li>
+            <li>FPH for each door</li>
+        </ul>
+        <p>Press the "Calculate!" button</p>
+        <br>
+        <p>The next page returns:</p>
+        <ul>
+            <li>Assignments for each loader</li>
+            <li>OTEs per assignment per hour</li>
+            <li>Total OTEs for the PD per hour</li>
+        </ul>
+        <br>
+        <h2>Assumptions</h2>
+        <p>Loader Dispatch is a basic algorithm which makes the following assumptions:</p>
+        <ol>
+            <li>All loaders must be given an assignment.</li>
+            <li>A loader may be assigned a maximum of 4 doors, where the 
+                loader's PPH efficiency is affected according to the following 
+                table:
+            <br>
+            <table>
+                <tr>
+                <th>Doors</th>
+                <th>Efficiency</th>
+                </tr>
+                <tr>
+                <td>1</td>
+                <td>x100%</td>
+                </tr>
+                <tr>
+                <td>2</td>
+                <td>x85%</td>
+                </tr>
+                <tr>
+                <td>3</td>
+                <td>x80%</td>
+                </tr>
+                <tr>
+                <td>4</td>
+                <td>x78%</td>
+                </tr>
+            </table>
+            </li>
+            <li>No more than 1 loader can be assigned to each door.</li>
+            <li>For any loaders assigned to more than one door, all doors 
+                within the assignment must be adjacent (ex. A loader cannot 
+                be assigned to doors 2 and 4 without also being assigned 
+                to door 3)
+            </li>
+        </ol>
+        <br>
+        <a href="{{ url_for('home') }}">Home</a>
+    </body>
+</html>

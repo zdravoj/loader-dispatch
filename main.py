@@ -1,57 +1,75 @@
-from flask import Flask, redirect, url_for, render_template, request
-import json
+from flask import Flask, redirect, url_for, render_template, request, session
+import ote_minimizer
 
 app = Flask(__name__)
+app.secret_key = "secret"
 
-@app.route("/", methods=["POST", "GET"])
+# displays start screen of loader dispatch
+# user enters # of loaders, # of doors, and starting door number
+@app.route("/")
 def home():
-    if request.method == "POST":
-        loaders_num = request.form["loaders_num"]
-        doors_num = request.form["doors_num"]
-        start_door_num = request.form["start_door_num"]
-        return redirect(url_for(
-            "flow",
-            loaders_num= loaders_num,
-            doors_num= doors_num,
-            start_door_num= start_door_num
+    return render_template("home.html")
+
+# displays information about the loader dispatch algorithm
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+# user enters loader name and pph for each loader, and door fph
+@app.route("/flow", methods=['POST'])
+def flow():
+    loaders_num = request.values['loaders_num']
+    doors_num = request.values['doors_num']
+    start_door_num = request.values['start_door_num']
+    # store start door number for use in /dispatch
+    session["start_door_num"] = int(start_door_num)
+
+    return render_template(
+        "flow.html",
+        loaders_num= int(loaders_num),
+        doors_num= int(doors_num),
+        start_door_num= int(start_door_num)
+    )
+
+# returns loader assignments, OTEs, and individual OTEs for each assignment
+@app.route("/dispatch", methods=['POST'])
+def dispatch():
+    # get loader name and pph for OTE minimizer
+    loader_dict = {
+        request.values[f"name{i}"] : int(request.values[f"pph{i}"])
+        for i in range(len(
+            [name for name in request.form.keys() if name.startswith('name')]
         ))
-    else:
-        return render_template("index.html")
+    }
 
-@app.route("/<loaders_num>/<doors_num>/<start_door_num>", methods=["POST", "GET"])
-def flow(loaders_num, doors_num, start_door_num):
-    if request.method == "POST":
-        loader_dict = {
-            request.form[f"name{i}"] : request.form[f"pph{i}"]
-            for i in range(int(loaders_num))
-        }
-        door_array = [
-            request.form[f"fph{i}"]
-            for i in range(int(doors_num))
-        ]
-        data = {
-            'loader_dict': loader_dict,
-            'door_array': door_array
-        }
-        data = json.dumps(data)
-
-        return redirect(url_for(
-            "dispatch",
-            data= data
+    # get door fphs for OTE minimizer
+    door_array = [
+        int(request.values[f"fph{i}"])
+        for i in range(len(
+            [door for door in request.form.keys() if door.startswith('fph')]
         ))
-    else:
-        return render_template(
-            "flow.html",
-            loaders_num= int(loaders_num),
-            doors_num= int(doors_num),
-            start_door_num= int(start_door_num)
-        )
+    ]
 
-@app.route("/dispatch/<data>")
-def dispatch(data):
-    loader_dict = data['loader_dict']
-    door_array = data['door_array']
-    return print(f"{loader_dict}\n{door_array}")
+    # run OTE minimizer
+    assignments, assignment_otes, total_otes = ote_minimizer.minimize_ote(
+        loader_dict, door_array
+    )
+
+    start_door_num = session["start_door_num"]
+    loader_names = [name for name in assignments.keys()]
+    # extract door assignments from lists as strings for HTML display
+    door_assignments = [
+        ', '.join([str(door + start_door_num) for door in doors])
+        for doors in assignments.values()
+    ]
+
+    return render_template(
+        'dispatch.html',
+        loader_names= loader_names,
+        door_assignments= door_assignments,
+        assignment_otes= assignment_otes,
+        total_otes= total_otes
+    )
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

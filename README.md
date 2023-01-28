@@ -1,5 +1,7 @@
 # Loader Dispatch
 
+Loader Dispatch is currently deployed in a basic web application. Contact me for the URL and login if you want to try it out!
+
 ## About
 Loader Dispatch was designed for use in the outbounds area of a package distribution hub. 
 Packages are unloaded from trailers in the inbound, sorted in the hub, and distributed 

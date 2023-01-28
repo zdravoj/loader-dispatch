@@ -3,7 +3,7 @@ from itertools import permutations, combinations_with_replacement, chain
 
 # creates an array of sub-arrays with sub-array values starting at 0
     # in which the sizes of the sub-arrays containing the values
-    # are defined by the value in the array
+    # are defined by the value in the input array
     # ex. [1, 3, 1] returns [[0], [1, 2, 3], [4]]
 def slicer(array):
     n_subarrays = list(range(sum(array)))

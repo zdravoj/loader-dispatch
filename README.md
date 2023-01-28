@@ -29,8 +29,8 @@ and returns a list of loaders and their optimized assignment, including:
 Loader Dispatch makes the following assumptions:
 1. All loaders must be given an assignment.
 2. No more than 1 loader can be assigned to each door.
-3. Per assumptions 1 and 2, the number of loaders must always be less than or equal to the number of doors.
-4. All doors must have a loader assigned.
+3. All doors must have a loader assigned.
+4. Per assumptions 1 through 3, the number of loaders must always be less than or equal to the number of doors.
 5. A loader may be assigned a maximum of 4 doors, where the loader's PPH efficiency is affected
 according to the following table:
 

@@ -46,7 +46,10 @@ About Loader Dispatch
     <p>Loader Dispatch is a basic algorithm which makes the following assumptions:</p>
     <ol>
         <li>All loaders must be given an assignment.</li>
+        <li>No more than 1 loader can be assigned to each door.</li>
         <li>All doors must have a loader assigned.</li>
+        <li>Per assumptions 1 through 3, the number of loaders must 
+            always be less than or equal to the number of doors.</li>
         <li>A loader may be assigned a maximum of 4 doors, where the 
             loader's PPH efficiency is affected according to the following 
             table:
@@ -74,7 +77,8 @@ About Loader Dispatch
             </tr>
         </table>
         </li>
-        <li>No more than 1 loader can be assigned to each door.</li>
+        <li>Per assumption 5, the total number of doors cannot exceed 
+            the number of loaders times 4.</li>
         <li>For any loaders assigned to more than one door, all doors 
             within the assignment must be adjacent (ex. A loader cannot 
             be assigned to doors 2 and 4 without also being assigned 

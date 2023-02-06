@@ -2,6 +2,9 @@ from flask import Flask, redirect, url_for, render_template, request, session
 import ote_minimizer
 
 app = Flask(__name__)
+# secret key must be defined to declare a user session
+    # NOT NECESSARY TO KEEP SECRET FOR NOW
+    # SECURITY HANDLED AT DEPLOYMENT LEVEL
 app.secret_key = "secret"
 
 # displays start screen of loader dispatch

@@ -3,18 +3,9 @@
 Loader Dispatch is currently deployed in a basic web application. Contact me for the URL and login if you want to try it out!
 
 ## About
-Loader Dispatch was designed for use in the outbounds area of a package distribution hub. 
-Packages are unloaded from trailers in the inbound, sorted in the hub, and distributed 
-to the outbounds to be loaded into outbound trailers. 
-Packages are distributed on conveyor belts which divert packages to outbound trailers via chutes. 
-Loaders remove the packages from the chutes and load them into trailers.
+Loader Dispatch was designed for use in the outbounds area of a package distribution hub. Packages are unloaded from trailers in the inbound, sorted in the hub, and distributed to the outbounds to be loaded into outbound trailers. Packages are distributed on conveyor belts which divert packages to outbound trailers via chutes. Loaders remove the packages from the chutes and load them into trailers.
 
-Each loader is unique in the number of packages they can consistently load per hour (packages-per-hour, or PPH)
-and every trailer (door) is unique in the number of packages distibuted to it (flow-per-hour, or FPH) on any given day.
-Should a door's FPH exceed a loader's PPH, packages will accumulate in that door's chute, and cause a chute backup.
-A backed-up chute cannot have any more packages delivered to it until packages are removed from the chute.
-Packages that cannot be delivered to a chute due to a backup must recirculate on the belt until space is available in
-the chute. Every instance of a recirculated package is considered an off-the-end (OTE).
+Each loader is unique in the number of packages they can consistently load per hour (packages-per-hour, or PPH) and every trailer (door) is unique in the number of packages distibuted to it (flow-per-hour, or FPH) on any given day. Should a door's FPH exceed a loader's PPH, packages will accumulate in that door's chute, and cause a chute backup. A backed-up chute cannot have any more packages delivered to it until packages are removed from the chute. Packages that cannot be delivered to a chute due to a backup must recirculate on the belt until space is available in the chute. Every instance of a recirculated package is considered an off-the-end (OTE).
 
 Loader Dispatch creates an optimal assignment of loaders to doors by minimizing OTEs.
 
@@ -66,17 +57,14 @@ Possible immediate improvements include:
 - Excluding doors from assignment
 
 ### Future Improvements
-Loader Dispatch has the capacity to be extremely useful, and could be used in real-time throughout a sort,
-but would need access to more data, such as:
+Loader Dispatch has the capacity to be extremely useful, and could be used in real-time throughout a sort, but would need access to more data, such as:
 - Real-time package flow data (to adjust assignments throughout the day based on flow changes, trailer replacements, etc.)
 - Historical loader PPH data (account for decreases in loader PPH throughout the day, or week)
 - Historical flow data (to make intra-day flow predictions)
 - Real-time input of loader temperament (unhappy loaders generally have decreased PPH)
 
 ### Penalizing Excess Reassignment
-Given this data, Loader Dispatch would likely "play musical doors" with loaders, losing efficiency by constantly making reassignments.
-A penalty to reassignment would prevent loaders from being moved around too much. This would need to be decided and adjusted
-based on the data available.
+Given this data, Loader Dispatch would likely "play musical doors" with loaders, losing efficiency by constantly making reassignments. A penalty to reassignment would prevent loaders from being moved around too much. This would need to be decided and adjusted based on the data available.
 
 ### Potential for Inbound Use
 With some adjustments, Loader Dispatch could also be used in the inbound to maximize efficiency of unloading trailers.

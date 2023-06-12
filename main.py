@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session
-import ote_minimizer
+from ote_minimizer import minimize_ote
 
 app = Flask(__name__)
 # secret key must be defined to declare a user session
@@ -54,7 +54,7 @@ def dispatch():
     ]
 
     # run OTE minimizer
-    assignments, assignment_otes, total_otes = ote_minimizer.minimize_ote(
+    assignments, assignment_otes, total_otes = minimize_ote(
         loader_dict, door_array
     )
 

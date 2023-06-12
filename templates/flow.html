@@ -7,20 +7,21 @@ PPH & FPH
 {% block content %}
     <form action="/dispatch" method="post">
         <h1>Loaders</h1>
-        <table>
+        <table id="loaderTable">
             <tr>
                 <th>Loader Name</th>
                 <th>PPH</th>
             </tr>
             {% for i in range(loaders_num) %}
             <tr>
-                <td><input type="text" name="name{{i}}"></td>
-                <td><input type="number" name="pph{{i}}"></td>
+                <td><input type="text" id="name{{i}}" name="name{{i}}"></td>
+                <td><input type="number" id="pph{{i}}" name="pph{{i}}"></td>
             </tr>
             {% endfor %}
         </table>
+        <br>
         <h1>Doors</h1>
-        <table>
+        <table id="doorTable">
             <tr>
                 <th>Door Number</th>
                 <th>FPH</th>
@@ -28,10 +29,56 @@ PPH & FPH
             {% for i in range(start_door_num, start_door_num+doors_num) %}
             <tr>
                 <td>Door {{i}}</td>
-                <td><input type="number" name="fph{{i-start_door_num}}"></td>
+                <td><input type="number"
+                    id="fph{{i-start_door_num}}"
+                    name="fph{{i-start_door_num}}"></td>
             </tr>
             {% endfor %}
         </table>
-        <p><input type="submit" text="Calculate!" value="submit"/></p>
+        <br>
+        <p><button type="button" onclick="fillFlowInputs()">Autofill</button></p>
+        <p><button type="submit">Calculate!</button></p>
     </form>
+{% endblock %}
+
+<!-- For Autofill -->
+{% block scripts %}
+<script>
+    function fillFlowInputs() {
+        var nameFills = [
+            "Shar", "Joe", "Tom", "Corwin", "Dean", "Mike", "Jane"
+        ];
+
+        var pphFills = [
+            595, 475, 660, 420, 550, 580, 430
+        ];
+
+        var fphFills = [
+            690, 420, 380, 160, 590, 445, 630, 290, 110, 80
+        ];
+
+        var loaderTable = document.getElementById('loaderTable');
+
+        for (var i = 0; i < loaderTable.rows.length-1; i++) {
+            var name = 'name' + i.toString();
+            var pph = 'pph' + i.toString();
+
+            var nameInput = document.getElementById(name);
+            var pphInput = document.getElementById(pph);
+
+            nameInput.value = nameFills[i];
+            pphInput.value = pphFills[i];
+        }
+
+        var doorTable = document.getElementById('doorTable');
+
+        for (var j = 0; j < doorTable.rows.length-1; j++) {
+            var fph = 'fph' + j.toString();
+
+            var fphInput = document.getElementById(fph);
+
+            fphInput.value = fphFills[j];
+        }
+    }
+</script>
 {% endblock %}

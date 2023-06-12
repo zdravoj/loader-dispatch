@@ -8,16 +8,29 @@ Loader Dispatch
     <h1>Loader Dispatch</h1>
     <form action="/flow" method="post">
         <p>Number of Loaders to Assign:  
-            <input type="number" name="loaders_num"/>
+            <input type="number" id="loaders_num" name="loaders_num"/>
         </p>
         <p>Number of Doors to Assign: 
-            <input type="number" name="doors_num"/>
+            <input type="number" id="doors_num" name="doors_num"/>
         </p>
         <p>Starting Door Number: 
-            <input type="number" name="start_door_num"/>
+            <input type="number" id="start_door_num" name="start_door_num"/>
         </p>
-        <p><input type="submit" value="submit"/></p>
+        <br>
+        <p><button type="button" onclick="fillHomeInputs()">Autofill</button></p>
+        <p><button type="submit">Submit</button></p>
     </form>
     <br>
     <a href="{{ url_for('about') }}">About</a>
+{% endblock %}
+
+<!-- For Autofill -->
+{% block scripts %}
+<script>
+    function fillHomeInputs() {
+        document.getElementById('loaders_num').value = 7;
+        document.getElementById('doors_num').value = 10;
+        document.getElementById('start_door_num').value = 100;
+    }
+</script>
 {% endblock %}

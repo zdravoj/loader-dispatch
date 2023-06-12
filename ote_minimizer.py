@@ -3,7 +3,7 @@ from itertools import permutations, combinations_with_replacement, chain
 
 # creates an array of sub-arrays 
     # with sub-array values starting at 0 and incrementing by 1
-    # in which the sizes of the sub-arrays containing the values
+    # in which the lengths of the sub-arrays containing the values
     # are defined by the value in the input array
     # ex. [1, 3, 1] returns [[0], [1, 2, 3], [4]]
 def get_assignments(input_array:list) -> list:

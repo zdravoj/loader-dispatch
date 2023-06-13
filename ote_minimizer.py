@@ -60,8 +60,8 @@ def minimize_ote(loader_dict: dict, door_array: list):
     n_loaders = len(loader_dict)
     n_doors = len(door_array)
     # get sizes of sub-arrays for get_assignments
-    perm_array = chain(*
-        [list(set(permutations(combination))) 
+    perm_array = chain.from_iterable(
+        [set(permutations(combination))
             for combination in 
                 [
                     comb for comb

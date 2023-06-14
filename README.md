@@ -5,7 +5,7 @@ Loader Dispatch is currently deployed in a basic web application. Contact me for
 ## About
 Loader Dispatch was designed for use in the outbounds area of a package distribution hub. Packages are unloaded from trailers in the inbound, sorted in the hub, and distributed to the outbounds to be loaded into outbound trailers. Packages are distributed on conveyor belts which divert packages to outbound trailers via chutes. Loaders remove the packages from the chutes and load them into trailers.
 
-Each loader is unique in the number of packages they can consistently load per hour (packages-per-hour, or PPH) and every trailer (door) is unique in the number of packages distibuted to it (flow-per-hour, or FPH) on any given day. Should a door's FPH exceed a loader's PPH, packages will accumulate in that door's chute, and cause a chute backup. A backed-up chute cannot have any more packages delivered to it until packages are removed from the chute. Packages that cannot be delivered to a chute due to a backup must recirculate on the belt until space is available in the chute. Every instance of a recirculated package is considered an off-the-end (OTE).
+Each loader is unique in the number of packages they can consistently load per hour (packages-per-hour, or PPH) and every trailer (door) is unique in the number of packages distributed to it (flow-per-hour, or FPH). Should a door's FPH exceed a loader's PPH, packages will accumulate in that door's chute, and cause a chute backup. No more packages can be delivered to the chute until the backup is cleared. Packages that cannot be delivered to a chute due to a backup must recirculate on the belt. Every instance of a recirculated package is considered an off-the-end (OTE).
 
 Loader Dispatch creates an optimal assignment of loaders to doors by minimizing OTEs.
 
@@ -39,7 +39,7 @@ according to the following table:
 (ex. A loader cannot be assigned to doors 2 and 4 without also being assigned to door 3).
 
 ## Limitations
-Loader Dispatch is primitive in its current state, and unable to account for many variables, including:
+Loader Dispatch is primitive in its current state and is unable to account for many variables, including:
 - The possibility of assigning more than one loader to a door
 - The possibility of assigning loaders to non-adjacent doors
 - Excluding doors from assignment (such as doors with 0 FPH)

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session
-from ote_minimizer import minimize_ote
+from .ote_minimizer import minimize_ote
 
 app = Flask(__name__)
 # secret key must be defined to declare a user session

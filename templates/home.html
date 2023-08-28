@@ -5,7 +5,10 @@ Loader Dispatch
 {% endblock %}
 
 {% block content %}
-    <h1 class="mt-4 mb-4">Loader Dispatch</h1>
+    <img src="{{url_for('static', filename='images/loader_dispatch_home_image.png') }}"
+        style="max-width: 80%; padding-top: 15px; padding-bottom: 30px;"
+    >
+    <h1 style="padding-bottom:50px; font-size: 50px;">Loader Dispatch</h1>
     <form action="/flow" method="post">
         <p>Number of Loaders to Assign:  
             <input type="number" id="loaders_num" name="loaders_num" required>

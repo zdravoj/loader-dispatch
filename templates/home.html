@@ -8,13 +8,13 @@ Loader Dispatch
     <h1 class="mt-4 mb-4">Loader Dispatch</h1>
     <form action="/flow" method="post">
         <p>Number of Loaders to Assign:  
-            <input type="number" id="loaders_num" name="loaders_num"/>
+            <input type="number" id="loaders_num" name="loaders_num" required>
         </p>
         <p>Number of Doors to Assign: 
-            <input type="number" id="doors_num" name="doors_num"/>
+            <input type="number" id="doors_num" name="doors_num" required>
         </p>
         <p>Starting Door Number: 
-            <input type="number" id="start_door_num" name="start_door_num"/>
+            <input type="number" id="start_door_num" name="start_door_num" required>
         </p>
         <br>
         <p><button type="button" onclick="fillHomeInputs()">Autofill</button></p>

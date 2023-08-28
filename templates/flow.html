@@ -14,8 +14,8 @@ PPH & FPH
             </tr>
             {% for i in range(loaders_num) %}
             <tr>
-                <td><input type="text" id="name{{i}}" name="name{{i}}"></td>
-                <td><input type="number" id="pph{{i}}" name="pph{{i}}"></td>
+                <td><input type="text" id="name{{i}}" name="name{{i}}" required></td>
+                <td><input type="number" id="pph{{i}}" name="pph{{i}}" required></td>
             </tr>
             {% endfor %}
         </table>
@@ -31,7 +31,8 @@ PPH & FPH
                 <td>Door {{i}}</td>
                 <td><input type="number"
                     id="fph{{i-start_door_num}}"
-                    name="fph{{i-start_door_num}}"></td>
+                    name="fph{{i-start_door_num}}"
+                    required></td>
             </tr>
             {% endfor %}
         </table>
@@ -39,6 +40,8 @@ PPH & FPH
         <p><button type="button" onclick="fillFlowInputs()">Autofill</button></p>
         <p><button type="submit">Calculate!</button></p>
     </form>
+    <br>
+    <a href="{{ url_for('home') }}" style="font-size: 30px;">Home</a>
 {% endblock %}
 
 <!-- For Autofill -->

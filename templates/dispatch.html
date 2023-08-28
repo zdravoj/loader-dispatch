@@ -5,23 +5,23 @@ Assignment Dispatch
 {% endblock %}
 
 {% block content %}
-    <h1>Loaders, Assignments, Individual OTEs</h1>
+    <h1 style="padding-top: 20px; padding-bottom: 10px;">Loader Assignments</h1>
     <table align="center">
     <tr>
-        <th>Name</th>
-        <th>Assignment</th>
-        <th>Individual OTEs</th>
+        <th style="padding-left: 20px; padding-right:20px;">Name</th>
+        <th style="padding-left: 20px; padding-right:20px;">Assignment</th>
+        <th style="padding-left: 20px; padding-right:20px;">Individual OTEs</th>
     </tr>
     {% for i in range(loader_names|length) %}
-        <tr>
-        <td>{{ loader_names[i] }}</td>
-        <td>{{ door_assignments[i] }}</td>
-        <td>{{ assignment_otes[i] }}</td>
+        <tr style="padding-top: 10px;">
+        <td style="padding-left: 20px; padding-right:20px;">{{ loader_names[i] }}</td>
+        <td style="padding-left: 20px; padding-right:20px;">{{ door_assignments[i] }}</td>
+        <td style="padding-left: 20px; padding-right:20px;">{{ assignment_otes[i] }}</td>
         </tr>
     {% endfor %}
     </table>
-    <h1>PD Total OTEs</h1>
+    <h1 style="padding-top: 30px; padding-bottom: 10px;">PD Total OTEs</h1>
     <p>{{ total_otes }}</p>
     <br>
-    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('home') }}" style="font-size: 30px;">Home</a>
 {% endblock %}

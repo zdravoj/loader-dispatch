@@ -6,7 +6,7 @@
     <tr>
         <th style="padding-left: 20px; padding-right:20px;">Name</th>
         <th style="padding-left: 20px; padding-right:20px;">Assignment</th>
-        <th style="padding-left: 20px; padding-right:20px;">Individual OTEs</th>
+        <th style="padding-left: 20px; padding-right:20px;">Individual Overflow</th>
     </tr>
     {% for i in range(loader_names|length) %}
         <tr style="padding-top: 10px;">
@@ -16,7 +16,7 @@
         </tr>
     {% endfor %}
     </table>
-    <h1 style="padding-top: 30px; padding-bottom: 10px;">PD Total OTEs</h1>
+    <h1 style="padding-top: 30px; padding-bottom: 10px;">Area Total Overflow</h1>
     <p>{{ total_otes }}</p>
     <br>
     <a href="{{ url_for('home') }}" style="font-size: 30px;">Home</a>

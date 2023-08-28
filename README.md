@@ -3,28 +3,28 @@
 Loader Dispatch is currently deployed in a basic web application. Contact me for the URL and login if you want to try it out!
 
 ## About
-Loader Dispatch was designed for use in the outbounds area of a package distribution hub. Packages are unloaded from trailers in the inbound, sorted in the hub, and distributed to the outbounds to be loaded into outbound trailers. Packages are distributed on conveyor belts which divert packages to outbound trailers via chutes. Loaders remove the packages from the chutes and load them into trailers.
+Loader Dispatch was designed for use in the outbounds area of a package distribution hub. Packages are unloaded from trailers in the inbound, sorted in the hub, and distributed to the outbounds to be loaded into outbound trailers.
 
-Each loader is unique in the number of packages they can consistently load per hour (packages-per-hour, or PPH) and every trailer (door) is unique in the number of packages distributed to it (flow-per-hour, or FPH). Should a door's FPH exceed a loader's PPH, packages will accumulate in that door's chute, and cause a chute backup. No more packages can be delivered to the chute until the backup is cleared. Packages that cannot be delivered to a chute due to a backup must recirculate on the belt. Every instance of a recirculated package is considered an off-the-end (OTE).
+Each loader has a minimum consistent number of packages they can load per hour (packages-per-hour, or PPH) and every trailer (door) has a maximum number of packages distributed to it in an hour (flow-per-hour, or FPH). Should a door's FPH exceed a loader's PPH, packages will accumulate in that door's chute and cause packages to build up (overflow).
 
-Loader Dispatch creates an optimal assignment of loaders to doors by minimizing OTEs.
+Loader Dispatch creates an optimal assignment of loaders to doors by minimizing overflow.
 
 ## Inputs and Outputs
 Loader Dispatch takes:
 1. Loader names and PPH for each loader
-2. A set of adjacent doors and FPH for each door
+2. A set of adjacent doors (area) and FPH for each door
 
-and returns a list of loaders and their optimized assignment, including:
-1. OTEs expected per hour for each loader's assignment
-2. Total OTEs expected per hour for the set of doors
+and returns an optimized assignment, including:
+1. total expected overflow per hour for each loader's assignment
+2. Total expected overflow per hour for the area
 
 ## Assumptions
 Loader Dispatch makes the following assumptions:
 1. All loaders must be given an assignment.
-2. No more than 1 loader can be assigned to each door.
+2. No more than one loader can be assigned to each door.
 3. All doors must have a loader assigned.
 4. Per assumptions 1 through 3, the number of loaders must always be less than or equal to the number of doors.
-5. A loader may be assigned a maximum of 4 doors, where the loader's PPH efficiency is affected
+5. A loader may be assigned a maximum of four doors, where the loader's PPH efficiency is affected
 according to the following table:
 
 | Doors | Efficiency |
@@ -34,24 +34,25 @@ according to the following table:
 | 3     | x80%       |
 | 4     | x78%       |
 
-6. Per assumption 5, the total number of doors cannot exceed the number of loaders times 4.
-7. For any loaders assigned to more than 1 door, all doors within the assignment must be adjacent
+6. Per assumption 5, the total number of doors cannot exceed four times the number of loaders.
+7. For any loaders assigned to more than one door, all doors within the assignment must be adjacent
 (ex. A loader cannot be assigned to doors 2 and 4 without also being assigned to door 3).
 
 ## Limitations
 Loader Dispatch is primitive in its current state and is unable to account for many variables, including:
 - The possibility of assigning more than one loader to a door
 - The possibility of assigning loaders to non-adjacent doors
-- Excluding doors from assignment (such as doors with 0 FPH)
-- Changes to FPH throughout the day
+- Excluding doors from assignment (such as doors with zero FPH)
+- Changes in FPH throughout the day
 - Changes in loader PPH throughout the day
-- Loaders needing breaks
+- Loader work breaks
 
 As of now, Loader Dispatch should not be used as anything more than a recommendation.
 
 ## Potential Improvements
 ### Immediate Improvements
 Possible immediate improvements include:
+- Algorithm optimization (currently brute forcing all door-loader permutations)
 - The possibility of assigning more than one loader to a door
 - The possibility of assigning loaders to non-adjacent doors
 - Excluding doors from assignment

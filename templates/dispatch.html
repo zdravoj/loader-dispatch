@@ -12,12 +12,12 @@
         <tr style="padding-top: 10px;">
         <td style="padding-left: 20px; padding-right:20px;">{{ loader_names[i] }}</td>
         <td style="padding-left: 20px; padding-right:20px;">{{ door_assignments[i] }}</td>
-        <td style="padding-left: 20px; padding-right:20px;">{{ assignment_otes[i] }}</td>
+        <td style="padding-left: 20px; padding-right:20px;">{{ assignment_overflow[i] }}</td>
         </tr>
     {% endfor %}
     </table>
     <h1 style="padding-top: 30px; padding-bottom: 10px;">Area Total Overflow</h1>
-    <p>{{ total_otes }}</p>
+    <p>{{ total_overflow }}</p>
     <br>
     <a href="{{ url_for('home') }}" style="font-size: 30px;">Home</a>
 {% endblock %}

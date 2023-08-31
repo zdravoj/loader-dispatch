@@ -34,10 +34,10 @@ def flow():
         start_door_num= int(start_door_num)
     )
 
-# returns loader assignments, OTEs, and individual OTEs for each assignment
+# returns loader assignments, area overflow, and individual overflow for each assignment
 @app.route("/dispatch", methods=['POST'])
 def dispatch():
-    # get loader name and pph for OTE minimizer
+    # get loader name and pph for overflow minimizer
     loader_dict = {
         request.values[f"name{i}"] : int(request.values[f"pph{i}"])
         for i in range(len(
@@ -45,7 +45,7 @@ def dispatch():
         ))
     }
 
-    # get door fphs for OTE minimizer
+    # get door fphs for overflow minimizer
     door_array = [
         int(request.values[f"fph{i}"])
         for i in range(len(
@@ -53,8 +53,8 @@ def dispatch():
         ))
     ]
 
-    # run OTE minimizer
-    assignments, assignment_otes, total_otes = minimize_ote(
+    # run overflow minimizer
+    assignments, assignment_overflow, total_overflow = minimize_ote(
         loader_dict, door_array
     )
 
@@ -70,8 +70,8 @@ def dispatch():
         'dispatch.html',
         loader_names= loader_names,
         door_assignments= door_assignments,
-        assignment_otes= assignment_otes,
-        total_otes= total_otes
+        assignment_overflow= assignment_overflow,
+        total_overflow= total_overflow
     )
 
 if __name__ == "__main__":

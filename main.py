@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session
-from .ote_minimizer import minimize_ote
+from .overflow_minimizer import minimize_overflow
 
 app = Flask(__name__)
 # secret key must be defined to declare a user session
@@ -54,7 +54,7 @@ def dispatch():
     ]
 
     # run overflow minimizer
-    assignments, assignment_overflow, total_overflow = minimize_ote(
+    assignments, assignment_overflow, total_overflow = minimize_overflow(
         loader_dict, door_array
     )
 

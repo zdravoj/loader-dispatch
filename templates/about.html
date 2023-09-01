@@ -11,11 +11,12 @@
         <br>
         <p>Each loader has a minimum consistent number of packages they can load per hour 
             (packages-per-hour, or PPH) and every trailer (door) has a maximum number of packages 
-            distributed to it in an hour (flow-per-hour, or FPH). Should a door's FPH exceed a 
-            loader's PPH, packages will accumulate in that door's chute and cause packages to 
-            build up (overflow). </p>
+            distributed to it per hour (flow-per-hour, or FPH). Should a door's FPH exceed a 
+            loader's PPH, packages will accumulate (overflow) in that door's chute and 
+            lower the area's performance. </p>
         <br>
-        <p>Loader Dispatch creates an optimal assignment of loaders to doors by minimizing overflow.</p>
+        <p>Loader Dispatch creates an optimal assignment of loaders to doors by minimizing 
+            area overflow.</p>
     </div>
     <h2 style="padding-bottom: 15px;">In a Nutshell</h2>
     <p>Loader Dispatch takes:</p>
@@ -105,7 +106,7 @@
             <li>For any loaders assigned to more than one door, all doors 
                 within the assignment must be adjacent (ex. A loader cannot 
                 be assigned to doors 2 and 4 without also being assigned 
-                to door 3)
+                to door 3).
             </li>
         </ol>
     </div>

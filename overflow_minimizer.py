@@ -100,7 +100,7 @@ def minimize_overflow(loader_dict: dict, door_array: list):
                 min_overflow = area_overflow
                 ind_loader_overflow = loader_overflow
 
-    return loader_dispatch, ind_loader_overflow, min_overflow
+    return loader_dispatch, [-v if v != 0.0 else 0.0 for v in ind_loader_overflow], -min_overflow
 
 
 if __name__ == "__main__":

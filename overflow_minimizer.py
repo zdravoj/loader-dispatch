@@ -1,13 +1,6 @@
 from itertools import permutations, combinations_with_replacement, chain
 
-
-# creates an array of sub-arrays 
-    # with sub-array values starting at 0 and incrementing by 1
-    # in which the lengths of the sub-arrays containing the values
-    # are defined by the value in the input array
-    # ex. [1, 3, 1] returns [[0], [1, 2, 3], [4]]
 def get_assignments(input_array:list) -> list:
-    # sub-list values
     values = list(range(sum(input_array)))
     return_array = []
     subarray_start_value = 0
@@ -21,113 +14,80 @@ def get_assignments(input_array:list) -> list:
         subarray_start_value += subarray_length
     return return_array
 
-
-# returns loader assignment which minimizes overflow
-def minimize_overflow(loader_dict: dict, door_array: list):
-
-    # efficiency table for loader PPH
-    efficiency = {
-        1 : 1.0,
-        2 : 0.85,
-        3 : 0.8,
-        4 : 0.77
+def calc_assign(door_split, loader_dict, doors):
+    EFFICIENCY = [1.0, 0.85, 0.8, 0.78]
+    loader_table = [
+        [k]+[round(v*x, 2) for x in EFFICIENCY] for k,v in loader_dict.items()
+    ]
+    loader_table_sorted = loader_table.copy()
+    loader_table_sorted.sort(key= lambda x: x[1], reverse= True)
+    assignment_structure = get_assignments(door_split)
+    doors_assigned = [[doors[i]for i in assignment] for assignment in assignment_structure]
+    assignment_sums = [sum(l) for l in doors_assigned]
+    assignment_structure_tups = [tuple(assignment) for assignment in assignment_structure]
+    assignment_groups = list(zip(assignment_sums, assignment_structure_tups))
+    assignment_groups_sorted = assignment_groups.copy()
+    assignment_groups_sorted.sort(key=lambda x: x[0], reverse=True)
+    dispatch = {k: v for k, v in zip(
+        [list(i) for i in zip(*loader_table_sorted)][0],
+        [list(i) for i in zip(*assignment_groups_sorted)][1]
+    )
     }
+    n_td_pph = [(i[0], x, i[x]) for i, x in zip(loader_table_sorted, [len(t[1]) for t in assignment_groups_sorted])]
+    new_ind_of = [x - y for x, y in zip([x[2] for x in n_td_pph], [y[0] for y in assignment_groups_sorted])]
+    new_ind_of = [-x if x < 0.0 else 0.0 for x in new_ind_of]
+    tot_of = sum(new_ind_of)
+    return dispatch, new_ind_of, tot_of
 
-    # calculate overflow for one loader (in assignment)
-    def calc_ind_overflow(loader_name:str, assignment:list):
-        # calculate loader pph
-        pph = loader_dict[loader_name] * efficiency[len(assignment)]
-        # sum doors fph
-        fph = sum([door_array[door] for door in assignment])
-        # subtract doors fph from loader pph
-        return pph - fph
 
-    # calculate area overflow (all loaders in all assignments)
-    def calc_area_overflow(loader_names:list, assignments:list):
-        area_overflow = 0.0
-        loader_overflow = []
-        for i in range(len(loader_names)):
-            # calculate loader overflow for assignment
-            load_overflow = calc_ind_overflow(loader_names[i], assignments[i])
-            # add individual loader overflow to loader overflow list
-            loader_overflow.append(load_overflow)
-            # add individual overflow to area overflow if negative
-            area_overflow += load_overflow if load_overflow < 0.0 else 0.0
-        # overall overflow
-        return area_overflow, loader_overflow
-
-    # for permutations
-    n_loaders = len(loader_dict)
-    n_doors = len(door_array)
-    # get sizes of sub-arrays for get_assignments
+def minimize_overflow(loader_dict, doors):
     perm_array = chain.from_iterable(
         [set(permutations(combination))
             for combination in 
                 [
                     comb for comb
-                    in combinations_with_replacement(range(1, 5), n_loaders)
-                    if sum(comb) == n_doors
+                    in combinations_with_replacement(range(1, 5), len(loader_dict))
+                    if sum(comb) == len(doors)
                 ]
         ]
     )
-    # all permutations of area assignments
-    door_permutations = [
-        get_assignments(door_groups)
-        for door_groups in perm_array
-    ]
-    # all permutations of loaders
-    loader_permutations = list(
-        permutations(loader_dict.keys(), len(loader_dict))
-    )
-
-    # initialize overflow (for maximizing)
-    min_overflow = -10000.0
-    # initialize dispatch and individual loader overflow
-    loader_dispatch = dict()
-    ind_loader_overflow = list()
-
-    # iterate through all possible combinations of loaders and door assignments
-    for door_perm in door_permutations:
-        for loader_perm in loader_permutations:
-            # calculate area overflow for loader/assignment combination
-            area_overflow, loader_overflow = calc_area_overflow(loader_perm, door_perm)
-            # assign loader dispatch and minimized overflow
-            if area_overflow > min_overflow:
-                loader_dispatch = {
-                    loader_perm[i] : door_perm[i]
-                    for i in range(len(loader_perm))
-                }
-                min_overflow = area_overflow
-                ind_loader_overflow = loader_overflow
-
-    return loader_dispatch, [-v if v != 0.0 else 0.0 for v in ind_loader_overflow], -min_overflow
+    dispatch, individual_overflow, total_overflow = dict(), list(), 10000.0
+    for door_assign in perm_array:
+        d, nio, to = calc_assign(door_assign, loader_dict, doors)
+        if to < total_overflow:
+            dispatch, individual_overflow, total_overflow = d, nio, to
+    return dispatch, individual_overflow, total_overflow
 
 
 if __name__ == "__main__":
     import time
     start = time.time()
     loader_dispatch, ind_loader_overflow, min_overflow = minimize_overflow(
-                                                            loader_dict= {
-                                                                "Shar": 595,
-                                                                "Joe": 475,
-                                                                "Tom": 660,
-                                                                "Corwin": 420,
-                                                                "Dean": 550,
-                                                                "Mike": 580,
-                                                                "Jane": 430
-                                                            },
-                                                            door_array= [
-                                                                690,
-                                                                420,
-                                                                380,
-                                                                160,
-                                                                590,
-                                                                445,
-                                                                630,
-                                                                290,
-                                                                110,
-                                                                80
-                                                            ]
+        loader_dict = {
+            "A": 810,
+            "B": 660,
+            "C": 595,
+            "D": 580,
+            "E": 550,
+            "F": 475,
+            "G": 430,
+            "H": 420,
+            "I": 300
+        },
+        doors = [
+            690,
+            420,
+            380,
+            160,
+            590,
+            445,
+            630,
+            290,
+            790,
+            120,
+            110,
+            80
+        ]
     )
     end = time.time()
     delta = end - start

@@ -101,3 +101,37 @@ def minimize_overflow(loader_dict: dict, door_array: list):
                 ind_loader_overflow = loader_overflow
 
     return loader_dispatch, [-v if v != 0.0 else 0.0 for v in ind_loader_overflow], -min_overflow
+
+
+if __name__ == "__main__":
+    import time
+    start = time.time()
+    loader_dispatch, ind_loader_overflow, min_overflow = minimize_overflow(
+                                                            loader_dict= {
+                                                                "Shar": 595,
+                                                                "Joe": 475,
+                                                                "Tom": 660,
+                                                                "Corwin": 420,
+                                                                "Dean": 550,
+                                                                "Mike": 580,
+                                                                "Jane": 430
+                                                            },
+                                                            door_array= [
+                                                                690,
+                                                                420,
+                                                                380,
+                                                                160,
+                                                                590,
+                                                                445,
+                                                                630,
+                                                                290,
+                                                                110,
+                                                                80
+                                                            ]
+    )
+    end = time.time()
+    delta = end - start
+    print(loader_dispatch)
+    print(ind_loader_overflow)
+    print(min_overflow)
+    print(delta)

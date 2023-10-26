@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, flash, render_template, request, session, redirect, url_for
 from .overflow_minimizer import minimize_overflow
+from .input_validation import HomeForm
 
 app = Flask(__name__)
 # secret key must be defined to declare a user session
@@ -11,7 +12,9 @@ app.secret_key = "secret"
 # user enters # of loaders, # of doors, and starting door number
 @app.route("/")
 def home():
-    return render_template("home.html")
+    form = HomeForm()
+
+    return render_template("home.html", form=form)
 
 # displays information about the loader dispatch algorithm
 @app.route("/about")

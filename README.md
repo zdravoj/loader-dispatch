@@ -52,7 +52,6 @@ As of now, Loader Dispatch should not be used as anything more than a recommenda
 ## Potential Improvements
 ### Immediate Improvements
 Possible immediate improvements include:
-- Algorithm optimization (currently brute forcing all door-loader permutations)
 - The possibility of assigning more than one loader to a door
 - The possibility of assigning loaders to non-adjacent doors
 - Excluding doors from assignment

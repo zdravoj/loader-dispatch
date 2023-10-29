@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
 from .overflow_minimizer import minimize_overflow
+from .input_validation import HomeForm
 
 app = Flask(__name__)
 # secret key must be defined to declare a user session
@@ -11,7 +12,9 @@ app.secret_key = "secret"
 # user enters # of loaders, # of doors, and starting door number
 @app.route("/")
 def home():
-    return render_template("home.html")
+    form = HomeForm()
+
+    return render_template("home.html", form=form)
 
 # displays information about the loader dispatch algorithm
 @app.route("/about")
@@ -19,19 +22,22 @@ def about():
     return render_template("about.html")
 
 # user enters loader name and pph for each loader, and door fph
-@app.route("/flow", methods=['POST'])
-def flow():
-    loaders_num = request.values['loaders_num']
-    doors_num = request.values['doors_num']
-    start_door_num = request.values['start_door_num']
+@app.route("/flow_redirect", methods=['POST'])
+def flow_redirect():
     # store start door number for use in /dispatch
-    session["start_door_num"] = int(start_door_num)
+    session['start_door_num'] = int(request.values['start_door_num'])
+    session['loaders_num'] = int(request.values['loaders_num'])
+    session['doors_num'] = int(request.values['doors_num'])
+    return redirect(url_for('flow'))
 
+# redirect used for UX, browser back button works
+@app.route("/flow", methods=['GET'])
+def flow():
     return render_template(
         "flow.html",
-        loaders_num= int(loaders_num),
-        doors_num= int(doors_num),
-        start_door_num= int(start_door_num)
+        loaders_num= session['loaders_num'],
+        doors_num= session['doors_num'],
+        start_door_num= session['start_door_num']
     )
 
 # returns loader assignments, area overflow, and individual overflow for each assignment

@@ -5,19 +5,15 @@
         style="max-width: 80%; padding-top: 15px; padding-bottom: 30px;"
     >
     <h1 style="padding-bottom:50px; font-size: 50px;">Loader Dispatch</h1>
-    <form action="/flow" method="post">
-        <p>Number of Loaders to Assign:  
-            <input type="number" id="loaders_num" name="loaders_num" required>
-        </p>
-        <p>Number of Doors to Assign: 
-            <input type="number" id="doors_num" name="doors_num" required>
-        </p>
-        <p>Starting Door Number: 
-            <input type="number" id="start_door_num" name="start_door_num" required>
-        </p>
+    <form action="/flow_redirect" method="post">
+        {{ form.hidden_tag() }}
+        <p>{{form.loaders_num.label}} {{form.loaders_num}}</p>
+        <p>{{form.doors_num.label}} {{form.doors_num}}</p>
+        <p>{{form.start_door_num.label}} {{form.start_door_num}}</p>
+        {{ form.error_message }}
         <br>
         <p><button type="button" onclick="fillHomeInputs()">Autofill</button></p>
-        <p><button type="submit">Submit</button></p>
+        {{ form.submit_button }}
     </form>
     <br>
     <a href="{{ url_for('about') }}" style="padding-bottom: 100px; font-size: 30px;">About</a>

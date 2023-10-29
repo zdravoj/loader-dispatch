@@ -1,4 +1,4 @@
-from flask import Flask, flash, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for
 from .overflow_minimizer import minimize_overflow
 from .input_validation import HomeForm
 

@@ -5,8 +5,7 @@
         style="max-width: 80%; padding-top: 15px; padding-bottom: 30px;"
     >
     <h1 style="padding-bottom:50px; font-size: 50px;">Loader Dispatch</h1>
-    <form action="/flow" method="post">
-        {{ form.csrf_token }}
+    <form action="/flow_redirect" method="post">
         {{ form.hidden_tag() }}
         <p>{{form.loaders_num.label}} {{form.loaders_num}}</p>
         <p>{{form.doors_num.label}} {{form.doors_num}}</p>

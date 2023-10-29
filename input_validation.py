@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, SubmitField
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms import IntegerField, SubmitField
+from wtforms.validators import DataRequired, NumberRange
 
 class HomeForm(FlaskForm):
     loaders_num = IntegerField(
@@ -30,7 +30,7 @@ class HomeForm(FlaskForm):
     error_message = ''
     submit_button = SubmitField('Submit')
 
-
+    # this doesn't work! why?
     def validate_on_submit(self):
         sv = FlaskForm.validate_on_submit(self)
         if sv:
